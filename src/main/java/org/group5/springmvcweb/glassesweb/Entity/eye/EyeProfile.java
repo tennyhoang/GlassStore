@@ -9,6 +9,7 @@ public class EyeProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "eye_profile_id")  // Thêm @Column với tên cột snake_case
     private Integer eyeProfileId;
 
     @Column(name = "customer_id")

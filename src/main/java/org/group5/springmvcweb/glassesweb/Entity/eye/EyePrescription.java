@@ -5,21 +5,34 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "EyePrescription")
 public class EyePrescription {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "prescription_id")
     private Integer prescriptionId;
 
     @Column(name = "eye_profile_id")
     private Integer eyeProfileId;
 
+    @Column(name = "eye_side")
     private String eyeSide; // "LEFT", "RIGHT", "BOTH"
 
+    @Column(name = "sph")
     private double sph;
+
+    @Column(name = "cyl")
     private double cyl;
+
+    @Column(name = "axis")
     private Integer axis;
+
+    @Column(name = "pd")
     private double pd;
+
+    @Column(name = "add_value")
     private double add;
 
+    // Getter và Setter thủ công (không dùng Lombok)
     public Integer getPrescriptionId() {
         return prescriptionId;
     }

@@ -28,7 +28,7 @@ public class EyePrescriptionServiceImpl implements EyePrescriptionService {
         EyeProfile profile = (EyeProfile) eyeProfileRepository.findById(eyeProfileId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy EyeProfile"));
         if (!profile.getCustomerId().equals(currentCustomerId)) {
-            throw new RuntimeException("Profile này không thuộc về bạn");
+            throw new RuntimeException("Bạn không sở hữu profile này");
         }
 
         eyePrescription.setEyeProfileId(eyeProfileId);
@@ -69,8 +69,9 @@ public class EyePrescriptionServiceImpl implements EyePrescriptionService {
     public boolean validatePrescription(Integer eyeProfileId, EyePrescription prescription) {
         EyeProfile profile = (EyeProfile) eyeProfileRepository.findById(eyeProfileId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy EyeProfile"));
-        // Không cần currentCustomerId trong validate (có thể bỏ nếu không dùng)
-        // if (!profile.getCustomerId().equals(currentCustomerId)) { ... }
+//        if (!profile.getCustomerId().equals(currentCustomerId)) {
+//            throw new RuntimeException("Bạn không sở hữu profile này");
+//        }
 
         if (prescription.getEyeSide() == null || prescription.getEyeSide().isEmpty()) {
             return false;

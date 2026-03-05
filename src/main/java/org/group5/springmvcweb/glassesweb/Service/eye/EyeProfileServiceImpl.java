@@ -22,7 +22,7 @@ public class EyeProfileServiceImpl implements EyeProfileService {
 
     @Override
     public List<EyeProfile> getAllByCustomer(Integer customerId) {
-        return (List<EyeProfile>) repository.findByCustomerId(customerId);
+        return /*(List<EyeProfile>)*/ repository.findByCustomerId(customerId);
     }
 
     @Override
