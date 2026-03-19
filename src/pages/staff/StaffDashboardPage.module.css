@@ -1,0 +1,106 @@
+.page { display: flex; flex-direction: column; gap: 24px; }
+
+.pageHeader { display: flex; align-items: center; justify-content: space-between; }
+.pageHeader h2 { font-family: var(--font-body); font-weight: 700; font-size: 1.4rem; }
+.pageHeader p  { color: var(--gray-5); font-size: 14px; margin-top: 2px; }
+
+/* Stat cards */
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.statCard {
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: var(--transition);
+}
+.statCard:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+.statIcon {
+  width: 48px; height: 48px;
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.statLabel { font-size: 12px; color: var(--gray-5); font-weight: 500; margin-bottom: 4px; }
+.statValue { font-size: 1.3rem; font-weight: 700; color: var(--ink); }
+
+/* 2 col layout */
+.row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Section card */
+.section {
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+.section h4 {
+  font-family: var(--font-body);
+  font-weight: 700; font-size: 14px;
+  margin-bottom: 20px;
+  color: var(--ink);
+}
+
+/* Status breakdown */
+.statusList { display: flex; flex-direction: column; gap: 12px; }
+.statusRow  { display: flex; align-items: center; gap: 10px; }
+.statusDot  { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.statusLabel{ font-size: 13px; width: 100px; flex-shrink: 0; color: var(--gray-5); }
+.statusBar  {
+  flex: 1; height: 8px;
+  background: var(--gray-2);
+  border-radius: 4px; overflow: hidden;
+}
+.statusFill { height: 100%; border-radius: 4px; transition: width .5s ease; }
+.statusCount{ font-size: 13px; font-weight: 600; width: 28px; text-align: right; }
+.statusPct  { font-size: 12px; color: var(--gray-4); width: 36px; text-align: right; }
+
+/* Recent orders */
+.recentOrders { display: flex; flex-direction: column; gap: 10px; }
+.orderRow {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px;
+  background: var(--gray-1);
+  border-radius: var(--radius);
+  transition: var(--transition);
+}
+.orderRow:hover { background: var(--gray-2); }
+.orderId       { font-weight: 700; font-size: 13px; margin-right: 8px; }
+.orderCustomer { font-size: 13px; color: var(--gray-5); }
+.orderRight    { display: flex; align-items: center; gap: 10px; }
+.orderAmount   { font-family: var(--font-display); font-size: 0.95rem; }
+
+/* Summary grid */
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 4px;
+}
+.summaryItem {
+  background: var(--gray-1);
+  border-radius: var(--radius);
+  padding: 16px;
+  text-align: center;
+}
+.summaryLabel { font-size: 12px; color: var(--gray-5); margin-bottom: 6px; }
+.summaryValue { font-size: 1.3rem; font-weight: 700; color: var(--ink); }
+
+@media (max-width: 1024px) {
+  .cardGrid    { grid-template-columns: repeat(2, 1fr); }
+  .summaryGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .row2     { grid-template-columns: 1fr; }
+  .cardGrid { grid-template-columns: 1fr 1fr; }
+}

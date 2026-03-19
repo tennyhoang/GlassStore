@@ -1,0 +1,94 @@
+.header { background: var(--gray-1); border-bottom: 1px solid var(--gray-2); padding: 48px 0 32px; }
+.header h1 { margin-bottom: 6px; }
+.header p  { color: var(--gray-5); }
+
+.stepper { display: flex; align-items: center; margin-bottom: 40px; }
+.stepItem { display: flex; align-items: center; gap: 8px; flex: 1; }
+.stepItem:last-child { flex: 0; }
+.stepCircle {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--gray-2); color: var(--gray-5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600; flex-shrink: 0;
+  transition: var(--transition);
+}
+.stepActive .stepCircle { background: var(--ink); color: var(--white); }
+.stepDone   .stepCircle { background: #2e7d32; color: var(--white); }
+.stepItem span { font-size: 13px; font-weight: 500; color: var(--gray-5); white-space: nowrap; }
+.stepActive span { color: var(--ink); }
+.stepLine { flex: 1; height: 1px; background: var(--gray-2); margin: 0 8px; }
+
+.layout { display: grid; grid-template-columns: 1fr 260px; gap: 32px; align-items: start; }
+.main  { }
+.stepTitle { font-size: 1.2rem; margin-bottom: 20px; font-family: var(--font-body); font-weight: 600; }
+
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.selectCard {
+  border: 2px solid var(--gray-2); border-radius: var(--radius-lg);
+  padding: 16px; cursor: pointer; transition: var(--transition);
+}
+.selectCard:hover { border-color: var(--gray-3); box-shadow: var(--shadow-sm); }
+.selected { border-color: var(--ink) !important; background: var(--gray-1); }
+.selectCardImg { font-size: 32px; margin-bottom: 10px; }
+.selectCardInfo .brand { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--gold); }
+.selectCardInfo h4 { font-size: 14px; font-weight: 600; margin: 4px 0; font-family: var(--font-body); }
+.selectCardInfo p  { font-size: 12px; color: var(--gray-5); }
+.price { font-family: var(--font-display); font-size: 1rem; color: var(--ink); margin-top: 8px !important; }
+
+.lensGrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.lensCard {
+  border: 2px solid var(--gray-2); border-radius: var(--radius-lg);
+  padding: 16px; cursor: pointer; transition: var(--transition);
+}
+.lensCard:hover { border-color: var(--gray-3); }
+.lensCard h4 { font-size: 14px; font-weight: 600; font-family: var(--font-body); margin-top: 8px; }
+
+.optionsSection { margin-top: 24px; }
+.optionsSection h4 { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+.optionsGrid { display: flex; flex-wrap: wrap; gap: 8px; }
+.optionItem {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px;
+  border: 1.5px solid var(--gray-2);
+  border-radius: 100px;
+  cursor: pointer; font-size: 13px;
+  transition: var(--transition);
+}
+.optionItem input { display: none; }
+.optionItem:hover { border-color: var(--gray-3); }
+.optionSelected { border-color: var(--ink); background: var(--gray-1); }
+.optionPrice { color: var(--gray-5); }
+
+.profileCard {
+  border: 2px solid var(--gray-2); border-radius: var(--radius-lg);
+  padding: 14px 16px; cursor: pointer; transition: var(--transition);
+}
+.profileCard:hover { border-color: var(--gray-3); }
+
+.confirmCard {
+  background: var(--gray-1); border-radius: var(--radius-lg);
+  padding: 24px; display: flex; flex-direction: column; gap: 12px;
+}
+.confirmRow { display: flex; justify-content: space-between; font-size: 14px; }
+.confirmRow span:first-child { color: var(--gray-5); }
+.confirmTotal { font-size: 16px; font-weight: 700; }
+
+/* Preview sidebar */
+.preview {
+  background: var(--white); border: 1px solid var(--gray-2);
+  border-radius: var(--radius-lg); padding: 20px;
+  position: sticky; top: calc(var(--nav-h) + 20px);
+}
+.preview h4 { font-size: 14px; font-weight: 600; margin-bottom: 16px; }
+.previewItem { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; }
+.previewItem span:first-child { color: var(--gray-5); }
+.previewTotal { display: flex; justify-content: space-between; align-items: baseline; }
+
+@media (max-width: 768px) {
+  .layout { grid-template-columns: 1fr; }
+  .preview { display: none; }
+  .grid3  { grid-template-columns: repeat(2,1fr); }
+  .lensGrid { grid-template-columns: 1fr; }
+  .stepper  { overflow-x: auto; }
+}

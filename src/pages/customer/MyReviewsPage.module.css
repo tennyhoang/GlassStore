@@ -1,0 +1,30 @@
+.header { background: var(--gray-1); border-bottom: 1px solid var(--gray-2); padding: 48px 0 32px; }
+.header h1 { margin-bottom: 6px; }
+.header p  { color: var(--gray-5); }
+.empty {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 14px; padding: 80px 0; text-align: center; color: var(--gray-4);
+}
+.empty h3 { color: var(--ink); }
+.list  { display: flex; flex-direction: column; gap: 14px; }
+.card  {
+  background: var(--white); border: 1px solid var(--gray-2);
+  border-radius: var(--radius-lg); padding: 20px 24px;
+  transition: var(--transition);
+}
+.card:hover { box-shadow: var(--shadow-sm); }
+.cardTop { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.typeTag {
+  font-size: 11px; font-weight: 600; letter-spacing: .06em;
+  color: var(--gray-5); text-transform: uppercase; margin-bottom: 4px; display: block;
+}
+.productName { font-size: 16px; font-weight: 600; }
+.comment {
+  margin-top: 12px; font-size: 14px; color: var(--gray-5);
+  line-height: 1.6; padding-top: 12px; border-top: 1px solid var(--gray-2);
+}
+.deleteBtn {
+  color: var(--gray-4); padding: 6px; border-radius: var(--radius-sm);
+  transition: var(--transition); flex-shrink: 0;
+}
+.deleteBtn:hover { color: var(--red); background: #ffebee; }
