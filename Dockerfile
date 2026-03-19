@@ -9,10 +9,13 @@ RUN mvn clean package -DskipTests -B
 # Stage 2: Run
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+
+# Project build ra .war — copy và đổi tên thành app.war
+COPY --from=build /app/target/*.war app.war
+
 EXPOSE 8080
 ENTRYPOINT ["java", \
   "-Dspring.profiles.active=prod", \
   "-XX:+UseContainerSupport", \
   "-XX:MaxRAMPercentage=75.0", \
-  "-jar", "app.jar"]
+  "-jar", "/app/app.war"]
