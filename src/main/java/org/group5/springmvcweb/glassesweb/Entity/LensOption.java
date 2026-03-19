@@ -1,30 +1,28 @@
 package org.group5.springmvcweb.glassesweb.Entity;
 
 import jakarta.persistence.*;
+import lombok.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "LensOption")
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
+@Builder
 public class LensOption {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "lens_option_id")
-    private Integer lensOptionId;
-    @Column(name = "index_value")
-    private String indexValue;
-    @Column(name = "coating")
-    private String coating;
-    @Column(name = "extra_price")
-    private double extraPrice;
+    @Column(name = "option_id")
+    private Integer optionId;
 
-    public Integer getLensOptionId() { return lensOptionId; }
-    public void setLensOptionId(Integer lensOptionId) { this.lensOptionId = lensOptionId; }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lens_id", nullable = false)
+    private Lens lens;
 
-    public String getIndexValue() { return indexValue; }
-    public void setIndexValue(String indexValue) { this.indexValue = indexValue; }
+    @Column(name = "option_name", length = 255)
+    private String optionName; // Chống UV, Chống ánh sáng xanh, Photochromic...
 
-    public String getCoating() { return coating; }
-    public void setCoating(String coating) { this.coating = coating; }
-
-    public double getExtraPrice() { return extraPrice; }
-    public void setExtraPrice(double extraPrice) { this.extraPrice = extraPrice; }
+    @Column(name = "extra_price", precision = 10, scale = 2)
+    private BigDecimal extraPrice;
 }

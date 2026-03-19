@@ -1,40 +1,40 @@
 package org.group5.springmvcweb.glassesweb.Entity;
 
 import jakarta.persistence.*;
+import lombok.*;
+import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "Lens")
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
+@Builder
 public class Lens {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "lens_id")
     private Integer lensId;
-    @Column(name = "brand")
-    private String brand;
-    @Column(name = "lens_type")
-    private String lensType;
-    @Column(name = "min_sph")
-    private double minSph;
-    @Column(name = "max_sph")
-    private double maxSph;
-    @Column(name = "base_price")
-    private double basePrice;
 
-    public Integer getLensId() { return lensId; }
-    public void setLensId(Integer lensId) { this.lensId = lensId; }
+    @Column(name = "name", length = 255, nullable = false)
+    private String name;
 
-    public String getBrand() { return brand; }
-    public void setBrand(String brand) { this.brand = brand; }
+    @Column(name = "lens_type", length = 100)
+    private String lensType; // SINGLE_VISION, BIFOCAL, PROGRESSIVE, BLUE_LIGHT
 
-    public String getLensType() { return lensType; }
-    public void setLensType(String lensType) { this.lensType = lensType; }
+    @Column(name = "material", length = 100)
+    private String material;
 
-    public double getMinSph() { return minSph; }
-    public void setMinSph(double minSph) { this.minSph = minSph; }
+    @Column(name = "index_value")
+    private Double indexValue; // 1.5, 1.56, 1.61, 1.67, 1.74
 
-    public double getMaxSph() { return maxSph; }
-    public void setMaxSph(double maxSph) { this.maxSph = maxSph; }
+    @Column(name = "price", precision = 10, scale = 2)
+    private BigDecimal price;
 
-    public double getBasePrice() { return basePrice; }
-    public void setBasePrice(double basePrice) { this.basePrice = basePrice; }
+    @Column(name = "status", length = 50)
+    private String status; // AVAILABLE, DISCONTINUED
+
+    @OneToMany(mappedBy = "lens", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<LensOption> options;
 }

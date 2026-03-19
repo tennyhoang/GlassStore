@@ -1,40 +1,45 @@
 package org.group5.springmvcweb.glassesweb.Entity;
 
 import jakarta.persistence.*;
+import lombok.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "Frame")
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
+@Builder
 public class Frame {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "frame_id")
+    @Column(name = "frame_id")
     private Integer frameId;
-    @Column(name = "brand")
+
+    @Column(name = "name", length = 255, nullable = false)
+    private String name;
+
+    @Column(name = "brand", length = 100)
     private String brand;
-    @Column(name = "material")
+
+    @Column(name = "color", length = 100)
+    private String color;
+
+    @Column(name = "material", length = 100)
     private String material;
-    @Column(name = "size")
-    private String size;
-    @Column(name = "rim_type")
-    private String rimType;
-    @Column(name = "price")
-    private double price;
 
-    public Integer getFrameId() { return frameId; }
-    public void setFrameId(Integer frameId) { this.frameId = frameId; }
+    @Column(name = "shape", length = 100)
+    private String shape;
 
-    public String getBrand() { return brand; }
-    public void setBrand(String brand) { this.brand = brand; }
+    @Column(name = "price", precision = 10, scale = 2)
+    private BigDecimal price;
 
-    public String getMaterial() { return material; }
-    public void setMaterial(String material) { this.material = material; }
+    @Column(name = "stock_quantity")
+    private Integer stockQuantity;
 
-    public String getSize() { return size; }
-    public void setSize(String size) { this.size = size; }
+    @Column(name = "image_url", length = 500)
+    private String imageUrl;
 
-    public String getRimType() { return rimType; }
-    public void setRimType(String rimType) { this.rimType = rimType; }
-
-    public double getPrice() { return price; }
-    public void setPrice(double price) { this.price = price; }
+    @Column(name = "status", length = 50)
+    private String status; // AVAILABLE, DISCONTINUED
 }
