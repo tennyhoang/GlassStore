@@ -44,13 +44,10 @@ public class SecurityConfig {
                                 "/api/auth/login",
                                 "/api/auth/register").permitAll()
                         .requestMatchers(HttpMethod.GET,
-                                "/api/reviews/**",
                                 "/api/frames/**",
                                 "/api/lenses/**",
                                 "/api/ready-made-glasses/**",
-                                "/api/contact-lenses/**",
-                                "/api/reviews/frames/**",
-                                "/api/reviews/products/**").permitAll()
+                                "/api/contact-lenses/**").permitAll()
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**").permitAll()
@@ -66,9 +63,13 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
+        String frontendUrl = System.getenv("FRONTEND_URL") != null
+                ? System.getenv("FRONTEND_URL")
+                : "https://glassstore-fe.onrender.com";
         config.setAllowedOrigins(List.of(
                 "http://localhost:3000",
-                "http://localhost:5173"
+                "http://localhost:5173",
+                frontendUrl
         ));
         config.setAllowedMethods(List.of("GET","POST","PUT","PATCH","DELETE","OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
