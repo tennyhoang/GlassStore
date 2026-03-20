@@ -78,6 +78,7 @@ export default function Navbar() {
                     <Link to="/notifications" onClick={() => setUserOpen(false)} className={styles.dropItem}>Thông báo</Link>
                     <Link to="/orders"        onClick={() => setUserOpen(false)} className={styles.dropItem}>Đơn hàng của tôi</Link>
                     <Link to="/reviews"       onClick={() => setUserOpen(false)} className={styles.dropItem}>Đánh giá của tôi</Link>
+                    <Link to="/pre-orders"    onClick={() => setUserOpen(false)} className={styles.dropItem}>Đơn đặt trước</Link>
                     <Link to="/returns"       onClick={() => setUserOpen(false)} className={styles.dropItem}>Đổi / Trả hàng</Link>
                     <Link to="/my-glasses"    onClick={() => setUserOpen(false)} className={styles.dropItem}>Kính của tôi</Link>
                     <hr className="divider" />

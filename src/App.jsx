@@ -27,7 +27,7 @@ import MyReviewsPage    from './pages/customer/MyReviewsPage'
 import ReturnPage       from './pages/customer/ReturnPage'
 import PreOrderPage     from './pages/customer/PreOrderPage'
 import CreatePreOrderPage from './pages/customer/CreatePreOrderPage'
-import customerPreOrderPage from './pages/customer/PreOrderPage'
+import StaffPreOrderPage from './pages/staff/StaffPreOrderPage'
 
 // Staff pages
 import StaffDashboardPage     from './pages/staff/StaffDashboardPage'
