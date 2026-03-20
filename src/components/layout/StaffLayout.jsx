@@ -1,4 +1,5 @@
-import { NavLink, Outlet, useNavigate, Link } from 'react-router-dom'
+import { NavLink, Outlet, useNavigate, useNavigate as useNav } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { LayoutDashboard, ShoppingBag, Wrench, Truck, Package, RotateCcw, Tag, Users, TrendingUp, Clock, LogOut, Eye } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import styles from './StaffLayout.module.css'
@@ -26,7 +27,7 @@ export default function StaffLayout() {
   return (
     <div className={styles.wrap}>
       <aside className={styles.sidebar}>
-        <Link to="/" className={styles.sidebarLogo} style={{textDecoration:'none',color:'inherit'}}>
+        <Link to="/" className={styles.sidebarLogo} style={{textDecoration:'none',color:'inherit',display:'flex',alignItems:'center',gap:'8px'}}>
           <Eye size={20} strokeWidth={1.5} />
           <span>GlassStore</span>
         </Link>

@@ -118,6 +118,7 @@ export default function App() {
         <Route path="returns"         element={<StaffReturnsPage />} />
         <Route path="discounts"       element={<StaffDiscountPage />} />
         <Route path="users"           element={<StaffUsersPage />} />
+        <Route path="pre-orders"      element={<StaffPreOrderPage />} />
         <Route path="reports"         element={<StaffReportPage />} />
       </Route>
 
