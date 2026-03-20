@@ -25,6 +25,9 @@ import WishlistPage     from './pages/customer/WishlistPage'
 import NotificationsPage from './pages/customer/NotificationsPage'
 import MyReviewsPage    from './pages/customer/MyReviewsPage'
 import ReturnPage       from './pages/customer/ReturnPage'
+import PreOrderPage     from './pages/customer/PreOrderPage'
+import CreatePreOrderPage from './pages/customer/CreatePreOrderPage'
+import StaffPreOrderPage from './pages/staff/StaffPreOrderPage'
 
 // Staff pages
 import StaffDashboardPage     from './pages/staff/StaffDashboardPage'
@@ -87,6 +90,12 @@ export default function App() {
         }/>
         <Route path="returns" element={
           <RequireAuth roles={['CUSTOMER']}><ReturnPage /></RequireAuth>
+        }/>
+        <Route path="pre-orders" element={
+          <RequireAuth roles={['CUSTOMER']}><PreOrderPage /></RequireAuth>
+        }/>
+        <Route path="pre-order" element={
+          <RequireAuth roles={['CUSTOMER']}><CreatePreOrderPage /></RequireAuth>
         }/>
         <Route path="notifications" element={
           <RequireAuth roles={['CUSTOMER','STAFF','ADMIN','OPERATION','SHIPPER']}>

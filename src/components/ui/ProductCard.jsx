@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ShoppingBag, Eye, Heart } from 'lucide-react'
 import { useCart } from '../../context/CartContext'
 import { useWishlist } from '../../context/WishlistContext'
@@ -13,6 +13,7 @@ function fmt(n) {
 
 export default function ProductCard({ item, type = 'frame' }) {
   const { addItem } = useCart()
+  const navigate = useNavigate()
   const wishlist = useWishlist()
   const { user } = useAuth()
 
@@ -65,10 +66,17 @@ export default function ProductCard({ item, type = 'frame' }) {
         <h4 className={styles.name}>{name}</h4>
         <div className={styles.footer}>
           <span className={styles.price}>{fmt(price)}</span>
-          {type === 'ready' && (
+          {type === 'ready' && item?.status !== 'OUT_OF_STOCK' && (
             <button className={`btn btn-primary btn-sm ${styles.addBtn}`}
               onClick={handleAddCart}>
               <ShoppingBag size={13}/> Thêm
+            </button>
+          )}
+          {item?.status === 'OUT_OF_STOCK' && (
+            <button className={`btn btn-outline btn-sm ${styles.addBtn}`}
+              style={{color:'#e65100',borderColor:'#e65100',fontSize:'11px'}}
+              onClick={e => { e.preventDefault(); navigate(`/pre-order?productId=${id}&type=${type}`) }}>
+              Đặt trước
             </button>
           )}
         </div>

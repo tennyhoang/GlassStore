@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, ShoppingBag, Wrench, Truck, Package, RotateCcw, Tag, Users, TrendingUp, LogOut, Eye } from 'lucide-react'
+import { LayoutDashboard, ShoppingBag, Wrench, Truck, Package, RotateCcw, Tag, Users, TrendingUp, Clock, LogOut, Eye } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import styles from './StaffLayout.module.css'
 
@@ -8,6 +8,7 @@ const navItems = [
   { to: '/staff/orders',        icon: ShoppingBag, label: 'Đơn hàng',       roles: ['STAFF','ADMIN'] },
   { to: '/staff/manufacturing', icon: Wrench,      label: 'Sản xuất',       roles: ['OPERATION','STAFF','ADMIN'] },
   { to: '/staff/shipments',     icon: Truck,       label: 'Giao hàng',      roles: ['SHIPPER','STAFF','ADMIN'] },
+  { to: '/staff/pre-orders',      icon: Clock,      label: 'Pre-order',       roles: ['STAFF','ADMIN','OPERATION'] },
   { to: '/staff/returns',       icon: RotateCcw,    label: 'Đổi/Trả',         roles: ['STAFF','ADMIN'] },
   { to: '/staff/reports',       icon: TrendingUp,   label: 'Báo cáo',         roles: ['ADMIN'] },
   { to: '/staff/users',         icon: Users,        label: 'Người dùng',      roles: ['ADMIN'] },
