@@ -26,7 +26,6 @@ public class PreOrderController {
     private final FrameRepository       frameRepository;
     private final ReadyMadeGlassesRepository readyMadeRepository;
 
-    // ── CUSTOMER: Tạo pre-order ──
     @PostMapping
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<ApiResponse<PreOrderResponse>> create(
@@ -58,7 +57,6 @@ public class PreOrderController {
         }
 
         po.setTotalAmount(totalAmount);
-        // Đặt cọc 30%
         po.setDepositAmount(totalAmount.multiply(new BigDecimal("0.3"))
                 .setScale(0, RoundingMode.CEILING));
 
@@ -67,7 +65,6 @@ public class PreOrderController {
                 .body(ApiResponse.ok("Đặt trước thành công!", toResponse(po)));
     }
 
-    // ── CUSTOMER: Xem pre-order của mình ──
     @GetMapping("/me")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<ApiResponse<List<PreOrderResponse>>> getMyOrders(
@@ -78,7 +75,6 @@ public class PreOrderController {
         return ResponseEntity.ok(ApiResponse.ok(list));
     }
 
-    // ── STAFF: Xem tất cả ──
     @GetMapping
     @PreAuthorize("hasAnyRole('STAFF','ADMIN','OPERATION')")
     public ResponseEntity<ApiResponse<List<PreOrderResponse>>> getAll(
@@ -90,62 +86,67 @@ public class PreOrderController {
                 list.stream().map(this::toResponse).collect(Collectors.toList())));
     }
 
-    // ── STAFF: Xác nhận ──
     @PatchMapping("/{id}/confirm")
     @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
     public ResponseEntity<ApiResponse<PreOrderResponse>> confirm(
             @PathVariable Integer id,
             @RequestBody(required = false) StaffNoteRequest req) {
-        return updateStatus(id, "CONFIRMED", req != null ? req.getNote() : null,
+        return updateStatus(id, "CONFIRMED",
+                req != null ? req.getNote() : null,
                 req != null ? req.getExpectedDate() : null);
     }
 
-    // ── OPERATIONS: Nhận hàng về kho ──
     @PatchMapping("/{id}/stock-received")
     @PreAuthorize("hasAnyRole('STAFF','ADMIN','OPERATION')")
     public ResponseEntity<ApiResponse<PreOrderResponse>> stockReceived(
             @PathVariable Integer id,
             @RequestBody(required = false) StaffNoteRequest req) {
-        return updateStatus(id, "STOCK_RECEIVED", req != null ? req.getNote() : null, null);
+        return updateStatus(id, "STOCK_RECEIVED",
+                req != null ? req.getNote() : null, null);
     }
 
-    // ── OPERATIONS: Đang xử lý (đóng gói) ──
     @PatchMapping("/{id}/processing")
     @PreAuthorize("hasAnyRole('STAFF','ADMIN','OPERATION')")
     public ResponseEntity<ApiResponse<PreOrderResponse>> processing(@PathVariable Integer id) {
         return updateStatus(id, "PROCESSING", null, null);
     }
 
-    // ── OPERATIONS: Sẵn sàng giao ──
     @PatchMapping("/{id}/ready")
     @PreAuthorize("hasAnyRole('STAFF','ADMIN','OPERATION')")
     public ResponseEntity<ApiResponse<PreOrderResponse>> ready(@PathVariable Integer id) {
         return updateStatus(id, "READY", null, null);
     }
 
-    // ── OPERATIONS: Đã giao ──
     @PatchMapping("/{id}/delivered")
     @PreAuthorize("hasAnyRole('STAFF','ADMIN','OPERATION')")
     public ResponseEntity<ApiResponse<PreOrderResponse>> delivered(@PathVariable Integer id) {
         return updateStatus(id, "DELIVERED", null, null);
     }
 
-    // ── STAFF: Huỷ ──
     @PatchMapping("/{id}/cancel")
     @PreAuthorize("hasAnyRole('STAFF','ADMIN','CUSTOMER')")
     public ResponseEntity<ApiResponse<PreOrderResponse>> cancel(
             @PathVariable Integer id,
             @RequestBody(required = false) StaffNoteRequest req) {
-        return updateStatus(id, "CANCELLED", req != null ? req.getNote() : null, null);
+        return updateStatus(id, "CANCELLED",
+                req != null ? req.getNote() : null, null);
     }
 
     private ResponseEntity<ApiResponse<PreOrderResponse>> updateStatus(
-            Integer id, String status, String note, LocalDateTime expectedDate) {
+            Integer id, String status, String note, String expectedDateStr) {
         PreOrder po = preOrderRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy pre-order"));
         po.setStatus(status);
-        if (note != null) po.setStaffNote(note);
-        if (expectedDate != null) po.setExpectedDate(expectedDate);
+        if (note != null && !note.isEmpty()) po.setStaffNote(note);
+        if (expectedDateStr != null && !expectedDateStr.isEmpty()) {
+            try {
+                if (expectedDateStr.contains("T")) {
+                    po.setExpectedDate(LocalDateTime.parse(expectedDateStr));
+                } else {
+                    po.setExpectedDate(LocalDateTime.parse(expectedDateStr + "T00:00:00"));
+                }
+            } catch (Exception ignored) {}
+        }
         preOrderRepository.save(po);
         return ResponseEntity.ok(ApiResponse.ok("Đã cập nhật", toResponse(po)));
     }
@@ -172,7 +173,6 @@ public class PreOrderController {
         );
     }
 
-    // ── DTOs ──
     @Getter @Setter @NoArgsConstructor
     public static class CreatePreOrderRequest {
         private Integer frameId;
@@ -184,8 +184,8 @@ public class PreOrderController {
 
     @Getter @Setter @NoArgsConstructor
     public static class StaffNoteRequest {
-        private String        note;
-        private LocalDateTime expectedDate;
+        private String note;
+        private String expectedDate; // "2026-03-25T00:00:00" hoặc "2026-03-25"
     }
 
     @Getter @AllArgsConstructor
