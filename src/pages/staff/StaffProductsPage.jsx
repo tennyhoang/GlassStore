@@ -86,7 +86,22 @@ export default function StaffProductsPage() {
                   <td><strong>{f.name}</strong></td>
                   <td>{f.brand}</td><td>{f.color}</td><td>{f.material}</td>
                   <td>{fmt(f.price)}</td><td>{f.stockQuantity}</td>
-                  <td><span className={`badge ${f.status==='AVAILABLE'?'badge-green':'badge-gray'}`}>{f.status==='AVAILABLE'?'Đang bán':'Ngừng bán'}</span></td>
+                  <td>
+                    <div style={{display:'flex',alignItems:'center',gap:'8px',flexWrap:'wrap'}}>
+                      <span className={`badge ${f.status==='AVAILABLE'?'badge-green':f.status==='OUT_OF_STOCK'?'badge-yellow':'badge-gray'}`}>
+                        {f.status==='AVAILABLE'?'Đang bán':f.status==='OUT_OF_STOCK'?'Hết hàng':'Ngừng bán'}
+                      </span>
+                      {isAdmin && (
+                        <button
+                          style={{padding:'4px 10px',fontSize:'12px',fontWeight:600,borderRadius:'6px',cursor:'pointer',border:'none',
+                            background: f.status==='AVAILABLE' ? '#fff3e0' : '#e8f5e9',
+                            color: f.status==='AVAILABLE' ? '#e65100' : '#2e7d32'}}
+                          onClick={() => toggleStatus(f,'frame')}>
+                          {f.status==='AVAILABLE' ? '🔴 Hết hàng' : '🟢 Mở bán'}
+                        </button>
+                      )}
+                    </div>
+                  </td>
                   <td><div className={styles.actions}>
                     <button className="btn btn-ghost btn-sm" onClick={() => setModal({type:'frames',item:f})}><Pencil size={14}/></button>
                     <button className="btn btn-ghost btn-sm" style={{color:'var(--red)'}} onClick={() => deleteFrame(f.frameId)}><Trash2 size={14}/></button>
@@ -100,13 +115,20 @@ export default function StaffProductsPage() {
                   <td>{l.material}</td><td>{l.indexValue}</td>
                   <td>{fmt(l.price)}</td>
                   <td>
-                    <span className={`badge ${l.status==='AVAILABLE'?'badge-green':'badge-gray'}`}>{l.status==='AVAILABLE'?'Đang bán':'Ngừng bán'}</span>
-                    {isAdmin && (
-                      <button className="btn btn-ghost btn-sm" style={{marginLeft:'6px',fontSize:'11px'}}
-                        onClick={() => toggleStatus(l,'lens')}>
-                        {l.status==='AVAILABLE'?'Tắt':'Bật'}
-                      </button>
-                    )}
+                    <div style={{display:'flex',alignItems:'center',gap:'8px',flexWrap:'wrap'}}>
+                      <span className={`badge ${l.status==='AVAILABLE'?'badge-green':'badge-gray'}`}>
+                        {l.status==='AVAILABLE'?'Đang bán':'Ngừng bán'}
+                      </span>
+                      {isAdmin && (
+                        <button
+                          style={{padding:'4px 10px',fontSize:'12px',fontWeight:600,borderRadius:'6px',cursor:'pointer',border:'none',
+                            background: l.status==='AVAILABLE' ? '#fff3e0' : '#e8f5e9',
+                            color: l.status==='AVAILABLE' ? '#e65100' : '#2e7d32'}}
+                          onClick={() => toggleStatus(l,'lens')}>
+                          {l.status==='AVAILABLE' ? '🔴 Tắt bán' : '🟢 Mở bán'}
+                        </button>
+                      )}
+                    </div>
                   </td>
                   <td><div className={styles.actions}>
                     <button className="btn btn-ghost btn-sm" onClick={() => setModal({type:'lenses',item:l})}><Pencil size={14}/></button>
@@ -119,15 +141,20 @@ export default function StaffProductsPage() {
                   <td><strong>{r.name}</strong></td>
                   <td>{r.brand}</td><td>{fmt(r.price)}</td><td>{r.stockQuantity}</td>
                   <td>
-                    <span className={`badge ${r.status==='AVAILABLE'?'badge-green':r.status==='OUT_OF_STOCK'?'badge-yellow':'badge-gray'}`}>
-                      {r.status==='AVAILABLE'?'Đang bán':r.status==='OUT_OF_STOCK'?'Hết hàng':'Ngừng bán'}
-                    </span>
-                    {isAdmin && (
-                      <button className="btn btn-ghost btn-sm" style={{marginLeft:'6px',fontSize:'11px'}}
-                        onClick={() => toggleStatus(r,'ready')}>
-                        {r.status==='AVAILABLE'?'Đánh dấu hết':'Mở bán'}
-                      </button>
-                    )}
+                    <div style={{display:'flex',alignItems:'center',gap:'8px',flexWrap:'wrap'}}>
+                      <span className={`badge ${r.status==='AVAILABLE'?'badge-green':r.status==='OUT_OF_STOCK'?'badge-yellow':'badge-gray'}`}>
+                        {r.status==='AVAILABLE'?'Đang bán':r.status==='OUT_OF_STOCK'?'Hết hàng':'Ngừng bán'}
+                      </span>
+                      {isAdmin && (
+                        <button
+                          style={{padding:'4px 10px',fontSize:'12px',fontWeight:600,borderRadius:'6px',cursor:'pointer',border:'none',
+                            background: r.status==='AVAILABLE' ? '#fff3e0' : '#e8f5e9',
+                            color: r.status==='AVAILABLE' ? '#e65100' : '#2e7d32'}}
+                          onClick={() => toggleStatus(r,'ready')}>
+                          {r.status==='AVAILABLE' ? '🔴 Hết hàng' : '🟢 Mở bán'}
+                        </button>
+                      )}
+                    </div>
                   </td>
                   <td><div className={styles.actions}>
                     <button className="btn btn-ghost btn-sm" style={{color:'var(--red)'}} onClick={() => deleteReady(r.productId)}><Trash2 size={14}/></button>
