@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Plus, Pencil, Trash2 } from 'lucide-react'
 import { productApi } from '../../services/api'
+import { useAuth } from '../../context/AuthContext'
 import toast from 'react-hot-toast'
 import styles from './StaffPage.module.css'
 
 function fmt(n) { return n ? new Intl.NumberFormat('vi-VN',{style:'currency',currency:'VND'}).format(n) : '—' }
 
 export default function StaffProductsPage() {
+  const { isAdmin } = useAuth()
   const [tab, setTab] = useState('frames')
   const [frames, setFrames] = useState([])
   const [lenses, setLenses] = useState([])
@@ -38,6 +40,21 @@ export default function StaffProductsPage() {
     if (!confirm('Ẩn sản phẩm này?')) return
     try { await productApi.deleteReadyMade(id); toast.success('Đã ẩn'); fetchAll() }
     catch { toast.error('Có lỗi xảy ra') }
+  }
+
+  const toggleStatus = async (item, type) => {
+    const newStatus = item.status === 'AVAILABLE' ? 'OUT_OF_STOCK' : 'AVAILABLE'
+    try {
+      if (type === 'frame') {
+        await productApi.updateFrame(item.frameId, {...item, status: newStatus, stockQuantity: item.stockQuantity})
+      } else if (type === 'lens') {
+        await productApi.updateLens(item.lensId, {...item, status: newStatus})
+      } else {
+        await productApi.updateReadyMade(item.productId, {...item, status: newStatus})
+      }
+      toast.success('Đã cập nhật trạng thái!')
+      fetchAll()
+    } catch { toast.error('Có lỗi xảy ra') }
   }
 
   return (
@@ -82,7 +99,15 @@ export default function StaffProductsPage() {
                   <td><span className="badge badge-blue">{l.lensType}</span></td>
                   <td>{l.material}</td><td>{l.indexValue}</td>
                   <td>{fmt(l.price)}</td>
-                  <td><span className={`badge ${l.status==='AVAILABLE'?'badge-green':'badge-gray'}`}>{l.status==='AVAILABLE'?'Đang bán':'Ngừng bán'}</span></td>
+                  <td>
+                    <span className={`badge ${l.status==='AVAILABLE'?'badge-green':'badge-gray'}`}>{l.status==='AVAILABLE'?'Đang bán':'Ngừng bán'}</span>
+                    {isAdmin && (
+                      <button className="btn btn-ghost btn-sm" style={{marginLeft:'6px',fontSize:'11px'}}
+                        onClick={() => toggleStatus(l,'lens')}>
+                        {l.status==='AVAILABLE'?'Tắt':'Bật'}
+                      </button>
+                    )}
+                  </td>
                   <td><div className={styles.actions}>
                     <button className="btn btn-ghost btn-sm" onClick={() => setModal({type:'lenses',item:l})}><Pencil size={14}/></button>
                     <button className="btn btn-ghost btn-sm" style={{color:'var(--red)'}} onClick={() => deleteLens(l.lensId)}><Trash2 size={14}/></button>
@@ -93,7 +118,17 @@ export default function StaffProductsPage() {
                 <tr key={r.productId}>
                   <td><strong>{r.name}</strong></td>
                   <td>{r.brand}</td><td>{fmt(r.price)}</td><td>{r.stockQuantity}</td>
-                  <td><span className={`badge ${r.status==='AVAILABLE'?'badge-green':'badge-gray'}`}>{r.status==='AVAILABLE'?'Đang bán':'Ngừng bán'}</span></td>
+                  <td>
+                    <span className={`badge ${r.status==='AVAILABLE'?'badge-green':r.status==='OUT_OF_STOCK'?'badge-yellow':'badge-gray'}`}>
+                      {r.status==='AVAILABLE'?'Đang bán':r.status==='OUT_OF_STOCK'?'Hết hàng':'Ngừng bán'}
+                    </span>
+                    {isAdmin && (
+                      <button className="btn btn-ghost btn-sm" style={{marginLeft:'6px',fontSize:'11px'}}
+                        onClick={() => toggleStatus(r,'ready')}>
+                        {r.status==='AVAILABLE'?'Đánh dấu hết':'Mở bán'}
+                      </button>
+                    )}
+                  </td>
                   <td><div className={styles.actions}>
                     <button className="btn btn-ghost btn-sm" style={{color:'var(--red)'}} onClick={() => deleteReady(r.productId)}><Trash2 size={14}/></button>
                   </div></td>
@@ -143,6 +178,21 @@ function ProductModal({ modal, onClose, onSaved }) {
   }
 
   const titles = { frames:'gọng kính', lenses:'tròng kính', ready:'kính làm sẵn' }
+
+  const toggleStatus = async (item, type) => {
+    const newStatus = item.status === 'AVAILABLE' ? 'OUT_OF_STOCK' : 'AVAILABLE'
+    try {
+      if (type === 'frame') {
+        await productApi.updateFrame(item.frameId, {...item, status: newStatus, stockQuantity: item.stockQuantity})
+      } else if (type === 'lens') {
+        await productApi.updateLens(item.lensId, {...item, status: newStatus})
+      } else {
+        await productApi.updateReadyMade(item.productId, {...item, status: newStatus})
+      }
+      toast.success('Đã cập nhật trạng thái!')
+      fetchAll()
+    } catch { toast.error('Có lỗi xảy ra') }
+  }
 
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
