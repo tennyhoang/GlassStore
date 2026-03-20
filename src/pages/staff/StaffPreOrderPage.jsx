@@ -56,8 +56,8 @@ export default function StaffPreOrderPage() {
     if (!noteModal) return
     try {
       await api.patch(`/pre-orders/${noteModal.id}/${noteModal.action}`, {
-        note,
-        expectedDate: expectedDate || null
+        note: note || null,
+        expectedDate: expectedDate ? expectedDate + 'T00:00:00' : null
       })
       toast.success('Đã cập nhật!')
       setNoteModal(null); setNote(''); setExpectedDate('')
