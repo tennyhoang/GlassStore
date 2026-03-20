@@ -47,13 +47,15 @@ export default function StaffProductsPage() {
     try {
       if (type === 'frame') {
         await productApi.updateFrame(item.frameId, {...item, status: newStatus, stockQuantity: item.stockQuantity})
+        setFrames(fs => fs.map(f => f.frameId === item.frameId ? {...f, status: newStatus} : f))
       } else if (type === 'lens') {
         await productApi.updateLens(item.lensId, {...item, status: newStatus})
+        setLenses(ls => ls.map(l => l.lensId === item.lensId ? {...l, status: newStatus} : l))
       } else {
         await productApi.updateReadyMade(item.productId, {...item, status: newStatus})
+        setReady(rs => rs.map(r => r.productId === item.productId ? {...r, status: newStatus} : r))
       }
       toast.success('Đã cập nhật trạng thái!')
-      fetchAll()
     } catch { toast.error('Có lỗi xảy ra') }
   }
 
@@ -211,13 +213,15 @@ function ProductModal({ modal, onClose, onSaved }) {
     try {
       if (type === 'frame') {
         await productApi.updateFrame(item.frameId, {...item, status: newStatus, stockQuantity: item.stockQuantity})
+        setFrames(fs => fs.map(f => f.frameId === item.frameId ? {...f, status: newStatus} : f))
       } else if (type === 'lens') {
         await productApi.updateLens(item.lensId, {...item, status: newStatus})
+        setLenses(ls => ls.map(l => l.lensId === item.lensId ? {...l, status: newStatus} : l))
       } else {
         await productApi.updateReadyMade(item.productId, {...item, status: newStatus})
+        setReady(rs => rs.map(r => r.productId === item.productId ? {...r, status: newStatus} : r))
       }
       toast.success('Đã cập nhật trạng thái!')
-      fetchAll()
     } catch { toast.error('Có lỗi xảy ra') }
   }
 
