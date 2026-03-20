@@ -20,7 +20,7 @@ const BADGE_COLORS = {
 export default function FrameDetailPage() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { isCustomer } = useAuth()
+  const { isCustomer, user } = useAuth()
   const [frame,   setFrame]   = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -104,7 +104,7 @@ export default function FrameDetailPage() {
 
             {/* Actions */}
             <div className={styles.actions}>
-              {isCustomer ? (
+              {user ? (
                 <>
                   <button className="btn btn-primary btn-lg"
                     onClick={() => navigate(`/design?frameId=${frame.frameId}`)}>
