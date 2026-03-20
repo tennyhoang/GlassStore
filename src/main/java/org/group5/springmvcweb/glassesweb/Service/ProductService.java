@@ -25,7 +25,7 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public List<FrameResponse> getAllFrames() {
-        return frameRepository.findByStatus("AVAILABLE")
+        return frameRepository.findByStatusIn(List.of("AVAILABLE", "OUT_OF_STOCK"))
                 .stream().map(this::toFrameResponse)
                 .collect(Collectors.toList());
     }
