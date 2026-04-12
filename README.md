@@ -1,143 +1,148 @@
-# GlassStore Backend — Refactored Files (Giai đoạn 1)
+# GlassStore — Backend
 
-## Cấu trúc thư mục
+REST API cho hệ thống bán kính mắt cao cấp GlassStore, xây dựng bằng Spring Boot 3.2.2.
 
-```
-├── pom.xml                                          ← UPDATED: thêm springdoc + security-test
-└── src/
-    ├── main/java/.../
-    │   ├── config/
-    │   │   └── SwaggerConfig.java                   ← MỚI: cấu hình Swagger UI
-    │   └── security/
-    │       └── GlobalExceptionHandler.java           ← UPDATED: mở rộng xử lý exception
-    └── test/java/.../
-        ├── AuthServiceTest.java                      ← MỚI: 4 unit test cho AuthService
-        └── ProductServiceTest.java                   ← MỚI: 6 unit test cho ProductService
-```
+## Tech Stack
 
----
+- **Java 17** + **Spring Boot 3.2.2**
+- **SQL Server** (database)
+- **Spring Security** + **JWT** (xác thực)
+- **Hibernate / JPA** (ORM)
+- **Cloudinary** (lưu trữ ảnh)
+- **WebSocket / STOMP** (thông báo realtime)
+- **Bucket4j** (rate limiting)
+- **Swagger / OpenAPI** (API docs)
 
-## Cách apply
+## Yêu cầu hệ thống
 
-### Bước 1 — Copy file vào project
-```
-pom.xml                    → thay file cũ
-src/main/.../config/SwaggerConfig.java           → tạo mới
-src/main/.../security/GlobalExceptionHandler.java → thay file cũ
-src/test/.../AuthServiceTest.java                → tạo mới
-src/test/.../ProductServiceTest.java             → tạo mới
-```
+- Java 17+
+- Maven 3.8+
+- SQL Server 2019+ (hoặc SQL Server Express)
+- (Tuỳ chọn) Gmail App Password nếu muốn gửi email
 
-### Bước 2 — Reload Maven
+## Cài đặt & Chạy
+
+### 1. Clone repo
+
 ```bash
-mvn clean install
-# hoặc trong IntelliJ: chuột phải pom.xml → Maven → Reload Project
+git clone https://github.com/tennyhoang/GlassStore.git
+cd GlassStore
+git checkout main
 ```
 
-### Bước 3 — Chạy test
+### 2. Tạo database
+
+Mở **SQL Server Management Studio**, chạy script tạo database:
+
+```sql
+CREATE DATABASE GlassStore;
+USE GlassStore;
+-- Chạy file schema.sql trong thư mục /sql (nếu có)
+```
+
+Sau đó chạy migration thêm cột:
+
+```sql
+USE GlassStore;
+ALTER TABLE cart_item ADD frame_id INT NULL;
+```
+
+### 3. Cấu hình `application.properties`
+
+Mở file `src/main/resources/application.properties` và điền thông tin:
+
+```properties
+# Database
+spring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=GlassStore;encrypt=true;trustServerCertificate=true
+spring.datasource.username=sa
+spring.datasource.password=YOUR_PASSWORD
+
+# JWT — giữ nguyên hoặc đổi secret
+jwt.secret=GlassDB_SuperSecretKey_2024_Group5_ABCDEF
+jwt.expiration-ms=86400000
+
+# Email (tuỳ chọn — tắt khi dev)
+app.mail.enabled=false
+# Nếu muốn bật: điền Gmail + App Password (16 ký tự)
+# spring.mail.username=your-gmail@gmail.com
+# spring.mail.password=your-app-password
+
+# VNPay (tuỳ chọn — cần tài khoản sandbox VNPay)
+vnpay.tmn-code=YOUR_TMN_CODE
+vnpay.hash-secret=YOUR_HASH_SECRET
+```
+
+### 4. Chạy ứng dụng
+
 ```bash
-mvn test
-# Chạy test cụ thể:
-mvn test -Dtest=AuthServiceTest
-mvn test -Dtest=ProductServiceTest
+mvn spring-boot:run
 ```
 
-### Bước 4 — Xem Swagger UI
-Khởi động app rồi truy cập:
+Hoặc build JAR:
+
+```bash
+mvn clean package -DskipTests
+java -jar target/glassesweb-*.jar
+```
+
+Backend sẽ chạy tại: `http://localhost:8080`
+
+## API Documentation
+
+Truy cập Swagger UI sau khi chạy:
+
 ```
 http://localhost:8080/swagger-ui/index.html
 ```
 
----
+## Các tính năng chính
 
-## Chi tiết từng thay đổi
+| Tính năng | Endpoint |
+|-----------|----------|
+| Xác thực (Login/Register/Refresh) | `/api/auth/**` |
+| Quản lý sản phẩm (Gọng/Tròng/Kính làm sẵn) | `/api/frames/**`, `/api/lenses/**` |
+| Thiết kế kính theo yêu cầu | `/api/glasses-designs/**` |
+| Giỏ hàng | `/api/cart/**` |
+| Đặt hàng & theo dõi | `/api/orders/**` |
+| Hồ sơ mắt | `/api/eye-profiles/**` |
+| Thông báo realtime | WebSocket `/ws` |
+| Thanh toán VNPay | `/api/payment/vnpay/**` |
+| Đánh giá sản phẩm | `/api/reviews/**` |
+| Mã giảm giá | `/api/discounts/**` |
+| Quản lý sản xuất | `/api/manufacturing/**` |
+| Quản lý giao hàng | `/api/shipments/**` |
+| Đặt trước (Pre-order) | `/api/pre-orders/**` |
 
-### 1. `pom.xml` — Thêm 2 dependency
+## Phân quyền
 
-```xml
-<!-- Swagger / OpenAPI 3 -->
-<dependency>
-    <groupId>org.springdoc</groupId>
-    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-    <version>2.3.0</version>
-</dependency>
+| Role | Quyền |
+|------|-------|
+| `CUSTOMER` | Mua hàng, xem đơn, đánh giá, quản lý hồ sơ mắt |
+| `STAFF` | Quản lý đơn hàng, sản xuất, giao hàng |
+| `ADMIN` | Toàn quyền + quản lý người dùng, sản phẩm |
+| `SHIPPER` | Cập nhật trạng thái giao hàng |
 
-<!-- Spring Security Test — dùng @WithMockUser trong test -->
-<dependency>
-    <groupId>org.springframework.security</groupId>
-    <artifactId>spring-security-test</artifactId>
-    <scope>test</scope>
-</dependency>
+## Tài khoản mặc định (dev)
+
+```
+admin   / (password trong DB)  → ADMIN
+staff01 / (password trong DB)  → STAFF
+tenny   / (password trong DB)  → CUSTOMER
 ```
 
-### 2. `SwaggerConfig.java` — Tạo mới
+## Cấu trúc thư mục
 
-Cấu hình Swagger UI với JWT Bearer auth:
-- Truy cập `/swagger-ui/index.html`
-- Click **Authorize** → nhập token
-- Test API trực tiếp trên browser
-
-SecurityConfig đã có sẵn `permitAll()` cho `/swagger-ui/**` và `/v3/api-docs/**` rồi — không cần sửa thêm.
-
-### 3. `GlobalExceptionHandler.java` — Mở rộng
-
-| Exception | HTTP Status | Trường hợp |
-|-----------|-------------|------------|
-| `MethodArgumentNotValidException` | 400 | @Valid thất bại → trả về map field:message |
-| `MissingServletRequestParameterException` | 400 | Thiếu query param bắt buộc |
-| `MethodArgumentTypeMismatchException` | 400 | Sai kiểu tham số (VD: "abc" thay vì số) |
-| `MaxUploadSizeExceededException` | 400 | File upload quá lớn |
-| `BadCredentialsException` | 401 | Sai username/password |
-| `DisabledException` | 401 | Tài khoản bị vô hiệu hoá |
-| `LockedException` | 401 | Tài khoản bị khoá |
-| `AccessDeniedException` | 403 | @PreAuthorize thất bại |
-| `EyeProfileNotFoundException` | 404 | Custom exception |
-| `EyeProfileAccessDeniedException` | 403 | Custom exception |
-| `RuntimeException` | 400 | Lỗi nghiệp vụ (message từ Service) |
-| `Exception` | 500 | Lỗi hệ thống — log + trả về message chung |
-
-**Lý do tách `Exception` khỏi `RuntimeException`:** RuntimeException là lỗi nghiệp vụ có thể đoán trước (trả về message thật cho user). Exception là lỗi hệ thống không mong muốn (log đầy đủ, trả về message chung để không lộ thông tin nhạy cảm).
-
-### 4. Unit Tests — Mockito pattern
-
-Cả 2 test file dùng cùng pattern:
-```java
-@ExtendWith(MockitoExtension.class)  // không cần Spring context → test nhanh hơn
-class AuthServiceTest {
-    @Mock private AccountRepository accountRepository;  // mock dependency
-    @InjectMocks private AuthService authService;       // inject mock vào
-    
-    @Test
-    void login_success_returnsAuthResponse() {
-        // Arrange — setup mock behavior
-        when(authenticationManager.authenticate(any())).thenReturn(auth);
-        
-        // Act — gọi method cần test
-        AuthResponse response = authService.login(request);
-        
-        // Assert — kiểm tra kết quả
-        assertThat(response.getToken()).isEqualTo("mock.jwt.token");
-        
-        // Verify — kiểm tra mock được gọi đúng số lần
-        verify(jwtUtil, times(1)).generateToken(any());
-    }
-}
+```
+src/main/java/org/group5/springmvcweb/glassesweb/
+├── Controller/     # REST endpoints
+├── Service/        # Business logic
+├── Repository/     # JPA repositories
+├── Entity/         # Database entities
+├── DTO/            # Request/Response objects
+├── security/       # JWT, Spring Security config
+└── config/         # App configuration (Cache, WebSocket, RateLimit...)
 ```
 
-**Tại sao dùng `@ExtendWith(MockitoExtension.class)` thay vì `@SpringBootTest`?**
-- `@SpringBootTest` load toàn bộ Spring context + kết nối DB → chậm (5-10 giây)
-- `MockitoExtension` chỉ test logic thuần Java → nhanh (< 1 giây)
-- Unit test nên test 1 class, không cần cả hệ thống
+## Nhóm phát triển
 
----
-
-## Điểm có thể hỏi trong phỏng vấn
-
-**Q: Tại sao dùng `@RestControllerAdvice` thay vì try-catch trong từng controller?**
-> A: Tách biệt error handling khỏi business logic. Controller chỉ lo happy path, exception tự động được bắt tập trung. Tránh duplicate code và đảm bảo response format nhất quán.
-
-**Q: `@ExceptionHandler(RuntimeException.class)` có bắt được `BadCredentialsException` không?**
-> A: Không, vì Spring ưu tiên handler cụ thể nhất. `BadCredentialsException` match với `handleBadCredentials()` trước, không fall qua `handleRuntime()`.
-
-**Q: Tại sao không trả về message thật của Exception trong handler 500?**
-> A: Message có thể chứa thông tin nhạy cảm như SQL query, file path, stack trace. Chỉ log server-side, trả về message chung cho client.
+**Group 5 — FPT University**
