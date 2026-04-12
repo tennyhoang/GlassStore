@@ -1,0 +1,59 @@
+.header { background: var(--gray-1); border-bottom: 1px solid var(--gray-2); padding: 48px 0 32px; }
+.header h1 { margin-bottom: 6px; }
+.header p  { color: var(--gray-5); }
+
+.empty {
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  padding: 80px 0; text-align: center; color: var(--gray-4);
+}
+.empty h3 { color: var(--ink); }
+.empty p  { color: var(--gray-5); }
+
+.layout { display: grid; grid-template-columns: 1fr 360px; gap: 32px; align-items: start; }
+
+.items { display: flex; flex-direction: column; gap: 12px; }
+.item {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 20px;
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  border-radius: var(--radius-lg);
+  transition: var(--transition);
+}
+.item:hover { box-shadow: var(--shadow-sm); }
+.itemImg {
+  width: 72px; height: 72px;
+  background: var(--gray-1);
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.itemInfo { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.itemInfo h4 { font-size: 15px; font-weight: 600; }
+.itemQty { font-size: 13px; color: var(--gray-5); }
+.itemRight { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.itemPrice { font-family: var(--font-display); font-size: 1.1rem; }
+.removeBtn {
+  color: var(--gray-4); padding: 6px; border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+.removeBtn:hover { color: var(--red); background: #fff5f5; }
+
+.summary {
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  position: sticky; top: calc(var(--nav-h) + 20px);
+}
+.summary h3 { margin-bottom: 20px; font-size: 1.1rem; }
+.summaryRow { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 12px; }
+.summaryRow span:first-child { color: var(--gray-5); }
+.free { color: #2e7d32; font-weight: 500; }
+.total { font-weight: 700; font-size: 16px; }
+.total span:last-child { font-family: var(--font-display); font-size: 1.3rem; }
+
+@media (max-width: 768px) {
+  .layout { grid-template-columns: 1fr; }
+  .summary { position: static; }
+}

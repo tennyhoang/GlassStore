@@ -1,0 +1,174 @@
+.header { background: var(--gray-1); border-bottom: 1px solid var(--gray-2); padding: 48px 0 32px; }
+.headerRow { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; }
+.headerRow h1 { margin-bottom: 6px; }
+.headerRow p  { color: var(--gray-5); }
+.headerBtns { display: flex; gap: 8px; }
+
+.loadingState { display: flex; justify-content: center; padding: 80px 0; }
+.empty {
+  text-align: center; padding: 80px 0;
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  color: var(--gray-4);
+}
+.empty h3 { color: var(--ink); }
+.empty p  { color: var(--gray-5); max-width: 360px; }
+
+.list { display: flex; flex-direction: column; gap: 12px; }
+
+.profileCard {
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: var(--transition);
+}
+.profileCard:hover { box-shadow: var(--shadow); }
+.inactive { opacity: .6; }
+
+.profileHeader {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; cursor: pointer;
+}
+.profileMeta { display: flex; align-items: center; gap: 8px; }
+.profileName  { font-weight: 600; font-size: 15px; }
+.profileDate  { font-size: 13px; color: var(--gray-5); }
+.profileActions { display: flex; align-items: center; gap: 8px; color: var(--gray-4); }
+
+.profileBody { padding: 16px 20px 20px; border-top: 1px solid var(--gray-2); }
+
+.prescriptionTable { overflow-x: auto; }
+.prescriptionTable table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.prescriptionTable th {
+  text-align: left; padding: 8px 12px;
+  font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--gray-5); background: var(--gray-1);
+  border-bottom: 1px solid var(--gray-2);
+}
+.prescriptionTable td { padding: 10px 12px; border-bottom: 1px solid var(--gray-2); }
+.prescriptionTable tr:last-child td { border-bottom: none; }
+
+.files { display: flex; flex-direction: column; gap: 8px; }
+.fileLink {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px; background: var(--gray-1); border-radius: var(--radius);
+  font-size: 13px; color: var(--ink);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.fileLink:hover { background: var(--gray-2); }
+
+/* ── Modal ── */
+.overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,.45);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 24px 16px 80px;
+  overflow-y: auto;
+  animation: fadeIn .2s ease;
+  /* Dam bao overlay luon co mau nen toan man hinh */
+  min-height: 100vh;
+}
+.modal {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  /* Tang tu 560px len 700px de form 2 cot khong bi chat */
+  width: 100%; max-width: 700px;
+  /* Bo max-height - overlay tu scroll thay vi modal */
+  padding: 28px 32px;
+  box-shadow: var(--shadow-lg);
+  animation: fadeUp .3s ease;
+}
+.modal h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+/* ── Eye sections ── */
+.eyeSection { margin-bottom: 20px; }
+.eyeLabel {
+  font-size: 14px; font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 14px;
+  padding: 8px 12px;
+  background: var(--gray-1);
+  border-radius: var(--radius);
+  border-left: 3px solid var(--ink);
+}
+
+/* Grid 2x2: SPH CYL / AXIS PD / ADD (full width) */
+.eyeFieldsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* ADD field (phan tu thu 5, cuoi cung) chiem toan bo chieu rong */
+.eyeFieldsGrid > div:nth-child(5) {
+  grid-column: 1 / -1;
+}
+
+.fieldHint {
+  font-size: 11px;
+  color: var(--gray-4);
+  margin-top: 3px;
+  display: block;
+}
+
+.modalBtns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--gray-2);
+}
+
+/* ── Upload dropzone ── */
+.dropZone {
+  border: 2px dashed var(--gray-3);
+  border-radius: var(--radius-lg);
+  padding: 32px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+}
+.dropZone:hover { border-color: var(--ink); background: var(--gray-1); }
+.dropZoneActive { border-color: var(--ink); border-style: solid; }
+
+.dropPlaceholder { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.dropPlaceholder p { font-size: 14px; color: var(--gray-5); }
+.dropPlaceholder span { font-size: 12px; color: var(--gray-4); }
+
+.fileSelected { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--gray-5); }
+.fileSelected p { font-size: 14px; font-weight: 500; color: var(--ink); }
+.fileSelected span { font-size: 12px; }
+
+.previewImg {
+  max-width: 100%; max-height: 240px;
+  border-radius: var(--radius);
+  object-fit: contain;
+}
+.filePreview { margin-bottom: 8px; }
+.fileImg {
+  max-width: 100%; max-height: 200px;
+  border-radius: var(--radius);
+  object-fit: contain;
+  cursor: pointer;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .modal { padding: 20px 18px; max-width: 100%; }
+  .headerRow { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 600px) {
+  .eyeFieldsGrid { grid-template-columns: 1fr; }
+  /* Khi 1 cot thi ADD khong can span nua */
+  .eyeFieldsGrid > div:nth-child(5) { grid-column: 1; }
+}

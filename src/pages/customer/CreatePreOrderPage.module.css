@@ -1,0 +1,15 @@
+.header { background:var(--gray-1);border-bottom:1px solid var(--gray-2);padding:48px 0 32px; }
+.header h1 { margin-bottom:6px; }
+.header p  { color:var(--gray-5); }
+.layout { display:grid;grid-template-columns:1fr 360px;gap:32px;align-items:start; }
+.warning { display:flex;gap:12px;padding:16px;background:#fff3e0;border-radius:var(--radius-lg);border:1px solid #ffe0b2;margin-bottom:20px; }
+.section { background:var(--white);border:1px solid var(--gray-2);border-radius:var(--radius-lg);padding:24px;margin-bottom:16px; }
+.section h3 { font-family:var(--font-body);font-weight:700;font-size:15px;margin-bottom:16px; }
+.qtyRow { display:flex;align-items:center;gap:16px; }
+.qtyNum { font-size:1.4rem;font-weight:700;min-width:32px;text-align:center; }
+.summaryCard { background:var(--white);border:1px solid var(--gray-2);border-radius:var(--radius-lg);padding:24px;position:sticky;top:80px; }
+.productInfo { display:flex;gap:14px;align-items:center;margin-bottom:4px; }
+.sumRow { display:flex;justify-content:space-between;font-size:14px;margin-bottom:10px; }
+.depositRow { display:flex;justify-content:space-between;font-size:15px;padding:12px;background:#fff3e0;border-radius:var(--radius);margin-top:8px; }
+.depositNote { font-size:12px;color:var(--gray-5);margin-top:8px;text-align:center; }
+@media(max-width:768px) { .layout{grid-template-columns:1fr;} }

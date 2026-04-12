@@ -1,0 +1,119 @@
+.pageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+/* Tang font size heading staff */
+.pageHeader h2 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 2vw, 1.7rem);
+}
+.pageHeader p { color: var(--gray-5); font-size: 15px; }
+
+.filterTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 20px;
+  background: var(--white);
+  padding: 4px;
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--gray-2);
+  width: fit-content;
+}
+/* Tang kich thuoc filterTab - min 44px height cho touch */
+.filterTab {
+  padding: 10px 20px;
+  min-height: 44px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-5);
+  transition: var(--transition);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+.filterTab:hover { color: var(--ink); background: var(--gray-1); }
+.filterActive { background: var(--ink); color: var(--white) !important; }
+
+.loading { display: flex; justify-content: center; padding: 60px; }
+.empty   { text-align: center; padding: 60px; color: var(--gray-4); font-size: 16px; }
+
+.tableWrap {
+  background: var(--white);
+  border: 1.5px solid var(--gray-2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  overflow-x: auto;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  /* Tang font size bang staff tu 14px len 15px */
+  font-size: 15px;
+}
+.table thead tr {
+  background: var(--gray-1);
+  border-bottom: 1.5px solid var(--gray-2);
+}
+.table th {
+  text-align: left;
+  /* Tang padding header */
+  padding: 14px 18px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--gray-5);
+  white-space: nowrap;
+}
+.table td {
+  /* Tang padding cell tu 14px len 16px — thoang hon, de scan */
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--gray-2);
+  vertical-align: middle;
+  /* Chieu cao toi thieu de row khong bi bop */
+  min-height: 56px;
+}
+.table tbody tr:last-child td { border-bottom: none; }
+.table tbody tr:hover { background: var(--gray-1); transition: background 150ms; }
+
+/* Row cursor pointer cho table co the click xem chi tiet */
+.table tbody tr[style*="cursor: pointer"]:hover {
+  background: #EFF6FF;
+}
+
+.actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+/* Modal */
+.modalOverlay {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(0,0,0,.45);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  animation: fadeIn .15s ease;
+}
+.modal {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  width: 100%; max-width: 580px;
+  max-height: 92vh; overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  animation: fadeUp .25s ease;
+}
+/* Tang font modal heading */
+.modal h3 { font-family: var(--font-display); font-size: 1.7rem; margin-bottom: 24px; }
+.modalForm { display: flex; flex-direction: column; gap: 18px; }
+.modalBtns { display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+@media (max-width: 600px) {
+  .row2 { grid-template-columns: 1fr; }
+  /* Mobile: bang scroll ngang */
+  .tableWrap { border-radius: var(--radius); }
+  .table th, .table td { padding: 14px 14px; }
+}

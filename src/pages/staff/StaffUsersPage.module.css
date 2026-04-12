@@ -1,0 +1,79 @@
+/* Role stats bar */
+.roleStats {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.roleStat {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 2px;
+  padding: 10px 16px;
+  background: var(--white);
+  border: 1.5px solid var(--gray-2);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: var(--transition);
+  min-width: 72px;
+}
+.roleStat:hover { border-color: var(--gray-3); }
+.roleStatActive { border-color: var(--ink); background: var(--ink); }
+.roleStatActive .roleCount,
+.roleStatActive .roleLabel { color: var(--white); }
+.roleCount { font-size: 1.2rem; font-weight: 700; color: var(--ink); }
+.roleLabel { font-size: 11px; font-weight: 500; color: var(--gray-5); letter-spacing:.03em; }
+
+/* Search */
+.searchBar {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px;
+}
+.searchBox {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px;
+  border: 1.5px solid var(--gray-2);
+  border-radius: var(--radius);
+  background: var(--white);
+  flex: 1; max-width: 360px;
+  transition: var(--transition);
+}
+.searchBox:focus-within { border-color: var(--ink); }
+.searchInput {
+  flex: 1; font-size: 14px; color: var(--ink); background: transparent;
+  border: none; outline: none;
+}
+
+/* User info cell */
+.userInfo { display: flex; align-items: center; gap: 10px; }
+.avatar {
+  width: 32px; height: 32px;
+  background: var(--ink); color: var(--white);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; flex-shrink: 0;
+}
+
+/* Role selection grid */
+.roleGrid {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.roleOption {
+  display: flex; align-items: center;
+  padding: 8px 12px;
+  border: 2px solid var(--gray-2);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.roleOption input { display: none; }
+.roleOption:hover { border-color: var(--gray-3); }
+.roleOptionActive { border-color: var(--ink); background: var(--gray-1); }
+
+/* Wide modal */
+.wideModal { max-width: 560px !important; }
+
+/* Confirm modal */
+.confirmModal { max-width: 400px !important; text-align: center; }
+.confirmIcon { font-size: 48px; margin-bottom: 12px; }
+.confirmModal h3 { margin-bottom: 8px; }
+.confirmModal p  { font-size: 14px; color: var(--gray-5); line-height: 1.6; margin-bottom: 4px; }

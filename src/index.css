@@ -1,0 +1,295 @@
+/* ─── Design System ─────────────────────────────────── */
+:root {
+  --black:   #0a0a0a;
+  --ink:     #1a1a2e;
+  --gray-1:  #f7f7f5;
+  --gray-2:  #efefec;
+  --gray-3:  #d8d8d2;
+  --gray-4:  #9a9a90;
+  --gray-5:  #6b6b62;
+  --white:   #ffffff;
+  --gold:    #b8965a;
+  --gold-lt: #d4ae78;
+  --red:     #c0392b;
+
+  /* Font: Inter de doc ro hon DM Sans, giu Cormorant cho heading */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+
+  --radius-sm: 6px;
+  --radius:    10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+  --shadow:    0 4px 16px rgba(0,0,0,.09);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.13);
+
+  --transition: 200ms cubic-bezier(.4,0,.2,1);
+  --transition-slow: 400ms cubic-bezier(.4,0,.2,1);
+
+  --nav-h: 72px;
+  --max-w: 1280px;
+
+  /* Accessibility variables — thay doi bang JS khi bat che do chu to */
+  --a11y-font-scale: 1;        /* 1 = binh thuong, 1.2 = lon hon */
+  --a11y-contrast:   normal;   /* normal | high */
+  --a11y-line-height: 1.7;
+}
+
+/* ─── High contrast mode ─────────────────────────────── */
+[data-contrast="high"] {
+  --ink:    #000000;
+  --gray-5: #3d3d3d;
+  --gray-4: #555555;
+  --gray-3: #999999;
+}
+
+/* ─── Large text mode ────────────────────────────────── */
+[data-fontsize="large"] {
+  --a11y-font-scale: 1.18;
+  --a11y-line-height: 1.85;
+}
+[data-fontsize="xlarge"] {
+  --a11y-font-scale: 1.35;
+  --a11y-line-height: 2;
+}
+
+/* ─── Reset ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-body);
+  /* font-size tang tu 15px len 16px — dung clamp de responsive */
+  font-size: clamp(calc(16px * var(--a11y-font-scale)), 1.1vw, calc(18px * var(--a11y-font-scale)));
+  line-height: var(--a11y-line-height, 1.7);
+  color: var(--ink);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  /* Letter spacing nhe giup nguoi lon tuoi doc de hon */
+  letter-spacing: 0.01em;
+}
+img, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font: inherit; }
+input, select, textarea {
+  font: inherit;
+  outline: none;
+  border: none;
+  background: transparent;
+}
+ul, ol { list-style: none; }
+
+/* Focus ring ro rang cho accessibility */
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ─── Typography ─────────────────────────────────────── */
+h1,h2,h3,h4,h5 { font-family: var(--font-display); font-weight: 400; line-height: 1.2; }
+h1 { font-size: clamp(calc(2.2rem * var(--a11y-font-scale)), 5vw, calc(3.8rem * var(--a11y-font-scale))); }
+h2 { font-size: clamp(calc(1.7rem * var(--a11y-font-scale)), 3vw, calc(2.6rem * var(--a11y-font-scale))); }
+h3 { font-size: clamp(calc(1.2rem * var(--a11y-font-scale)), 2vw, calc(1.7rem * var(--a11y-font-scale))); }
+h4 { font-size: calc(1.15rem * var(--a11y-font-scale)); }
+
+/* ─── Layout Utilities ───────────────────────────────── */
+.container { width: 100%; max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+.section    { padding: 80px 0; }
+.section-sm { padding: 48px 0; }
+
+/* ─── Buttons ─────────────────────────────────────────
+   Tang kich thuoc touch target len 48px (WCAG 2.1 AA)
+   Button phai co min-height 48px de nguoi gia nhan bam de
+─────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  /* Tang padding: truoc la 12px 28px, gio 14px 32px */
+  padding: 14px 32px;
+  /* Tang min-height len 48px (WCAG touch target) */
+  min-height: 48px;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  /* Tang font-size tu 14px len 15px */
+  font-size: calc(15px * var(--a11y-font-scale));
+  font-weight: 600;
+  letter-spacing: .02em;
+  transition: var(--transition);
+  white-space: nowrap;
+  /* Giup nguoi gia bam chuan hon */
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-primary {
+  background: var(--ink);
+  color: var(--white);
+}
+.btn-primary:hover { background: #2d2d4a; transform: translateY(-1px); box-shadow: var(--shadow); }
+.btn-primary:active { transform: translateY(0); }
+.btn-outline {
+  background: transparent;
+  color: var(--ink);
+  /* Tang do day border tu 1.5px len 2px de thay ro hon */
+  border: 2px solid var(--ink);
+}
+.btn-outline:hover { background: var(--ink); color: var(--white); }
+.btn-gold {
+  background: var(--gold);
+  color: var(--white);
+}
+.btn-gold:hover { background: var(--gold-lt); transform: translateY(-1px); }
+.btn-ghost {
+  background: transparent;
+  color: var(--gray-5);
+  padding: 10px 18px;
+}
+.btn-ghost:hover { color: var(--ink); background: var(--gray-1); }
+/* btn-sm van co touch target du lon */
+.btn-sm { padding: 10px 20px; font-size: calc(13px * var(--a11y-font-scale)); min-height: 44px; }
+.btn-lg { padding: 18px 40px; font-size: calc(17px * var(--a11y-font-scale)); min-height: 56px; }
+.btn:disabled { opacity: .45; pointer-events: none; }
+
+/* ─── Form Elements ──────────────────────────────────── */
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-label {
+  font-size: calc(14px * var(--a11y-font-scale));
+  font-weight: 600;
+  color: var(--gray-5);
+  letter-spacing: .03em;
+}
+.form-input {
+  width: 100%;
+  /* Tang padding va height de nguoi gia nhap lieu de hon */
+  padding: 14px 16px;
+  min-height: 52px;
+  border: 2px solid var(--gray-3);
+  border-radius: var(--radius);
+  font-size: calc(16px * var(--a11y-font-scale));
+  color: var(--ink);
+  background: var(--white);
+  transition: var(--transition);
+}
+.form-input:focus { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(26,26,46,0.1); }
+.form-input::placeholder { color: var(--gray-4); }
+.form-error { font-size: calc(13px * var(--a11y-font-scale)); color: var(--red); font-weight: 500; }
+
+/* ─── Cards ──────────────────────────────────────────── */
+.card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--gray-2);
+  overflow: hidden;
+  transition: var(--transition-slow);
+}
+.card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+
+/* ─── Badge ──────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  /* Tang padding de de doc hon */
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: calc(12px * var(--a11y-font-scale));
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+.badge-green  { background: #d1fae5; color: #065f46; }
+.badge-yellow { background: #fef3c7; color: #92400e; }
+.badge-red    { background: #fee2e2; color: #991b1b; }
+.badge-blue   { background: #dbeafe; color: #1e40af; }
+.badge-gray   { background: var(--gray-2); color: var(--gray-5); }
+
+/* ─── Divider ────────────────────────────────────────── */
+.divider { height: 1px; background: var(--gray-2); border: none; margin: 24px 0; }
+
+/* ─── Animations ─────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.fade-up  { animation: fadeUp .5s ease both; }
+.fade-in  { animation: fadeIn .3s ease both; }
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Loading Spinner ────────────────────────────────── */
+.spinner {
+  width: 22px; height: 22px;
+  border: 2.5px solid var(--gray-3);
+  border-top-color: var(--ink);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  display: inline-block;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────── */
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track { background: var(--gray-1); }
+::-webkit-scrollbar-thumb { background: var(--gray-3); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gray-4); }
+
+/* ─── Page fade in ───────────────────────────────────── */
+.page-enter { animation: fadeUp .4s ease both; }
+
+/* ─── Table global style ────────────────────────────── */
+table { border-collapse: collapse; width: 100%; }
+th {
+  font-size: calc(13px * var(--a11y-font-scale));
+  font-weight: 600;
+  color: var(--gray-5);
+  text-align: left;
+}
+td {
+  font-size: calc(14px * var(--a11y-font-scale));
+  /* Tang cell padding de bang thoang hon, de scan */
+  padding: 14px 12px;
+}
+
+/* ─── Link accessibility ─────────────────────────────── */
+a:not(.btn) {
+  transition: color var(--transition);
+}
+a:not(.btn):hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+/* ─── Selection color ────────────────────────────────── */
+::selection {
+  background: rgba(184, 150, 90, 0.25);
+  color: var(--ink);
+}
+
+/* ─── Mobile touch targets ───────────────────────────── */
+@media (max-width: 768px) {
+  /* Dam bao tat ca interactive element tren mobile >= 44px */
+  button, a, input[type="checkbox"], input[type="radio"], select {
+    min-height: 44px;
+  }
+
+  .container { padding: 0 16px; }
+
+  /* Tang font-size tren mobile */
+  body { font-size: 16px; }
+
+  .btn { min-height: 52px; font-size: 16px; }
+  .form-input { min-height: 56px; font-size: 16px; }
+}

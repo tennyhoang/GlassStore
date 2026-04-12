@@ -1,0 +1,90 @@
+.header { background: var(--gray-1); border-bottom: 1px solid var(--gray-2); padding: 48px 0 32px; }
+.headerRow { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+.headerRow h1 { margin-bottom: 6px; }
+.headerRow p  { color: var(--gray-5); }
+
+.empty {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 14px; padding: 80px 0; text-align: center; color: var(--gray-4);
+}
+.empty h3 { color: var(--ink); }
+.empty p  { color: var(--gray-5); max-width: 360px; }
+
+/* Form card */
+.formCard {
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin-bottom: 24px;
+  animation: fadeUp .3s ease;
+}
+.formHeader {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px;
+}
+.formHeader h3 { font-size: 1.1rem; font-family: var(--font-body); font-weight: 700; }
+.form { display: flex; flex-direction: column; gap: 20px; }
+.noOrders {
+  padding: 20px; background: var(--gray-1);
+  border-radius: var(--radius); color: var(--gray-5);
+}
+
+/* Type grid */
+.typeGrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+.typeCard {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 14px;
+  border: 2px solid var(--gray-2);
+  border-radius: var(--radius); cursor: pointer;
+  font-size: 14px; font-weight: 500;
+  transition: var(--transition);
+}
+.typeCard input { display: none; }
+.typeCard:hover { border-color: var(--gray-3); }
+.typeActive { border-color: var(--ink); background: var(--gray-1); }
+
+.notice {
+  padding: 14px 16px;
+  background: #fff8e1;
+  border-radius: var(--radius);
+  border-left: 3px solid #f57f17;
+  font-size: 13px; color: var(--gray-5); line-height: 1.6;
+}
+
+/* Return list */
+.list { display: flex; flex-direction: column; gap: 12px; }
+.returnCard {
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: var(--transition);
+}
+.returnCard:hover { box-shadow: var(--shadow-sm); }
+.cardHeader {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; cursor: pointer;
+}
+.cardMeta  { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.returnId  { font-weight: 700; font-size: 14px; }
+.orderRef  { font-size: 13px; color: var(--gray-5); }
+.typeBadge { font-size: 13px; }
+.cardRight { display: flex; align-items: center; gap: 10px; }
+.date      { font-size: 13px; color: var(--gray-4); }
+
+.cardBody {
+  padding: 16px 20px;
+  border-top: 1px solid var(--gray-2);
+  display: flex; flex-direction: column; gap: 12px;
+}
+.infoRow { display: flex; flex-direction: column; gap: 4px; }
+.infoRow span { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--gray-5); }
+.infoRow p    { font-size: 14px; color: var(--ink); line-height: 1.6; }
+.staffNote    { background: #e3f2fd; border-radius: var(--radius); padding: 12px 14px; }
+.staffNote span { color: #1565c0; }
+
+@media (max-width: 600px) {
+  .typeGrid { grid-template-columns: 1fr; }
+  .headerRow { flex-direction: column; align-items: flex-start; }
+}

@@ -1,0 +1,98 @@
+.header { background: var(--gray-1); border-bottom: 1px solid var(--gray-2); padding: 48px 0 32px; }
+.headerRow { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+.headerRow h1 { margin-bottom: 6px; }
+.headerRow p  { color: var(--gray-5); }
+
+/* Tabs */
+.tabs {
+  display: flex; gap: 4px;
+  background: var(--gray-1);
+  padding: 4px; border-radius: var(--radius-lg);
+  width: fit-content; margin-bottom: 24px;
+}
+.tab {
+  padding: 8px 18px; border-radius: var(--radius);
+  font-size: 14px; font-weight: 500; color: var(--gray-5);
+  transition: var(--transition);
+}
+.tab:hover   { color: var(--ink); }
+.tabActive   { background: var(--white); color: var(--ink); box-shadow: var(--shadow-sm); }
+
+/* Empty */
+.empty {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 14px; padding: 80px 0; color: var(--gray-4); text-align: center;
+}
+.empty h3 { color: var(--ink); }
+
+/* Date label */
+.dateLabel {
+  font-size: 12px; font-weight: 600; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--gray-4);
+  padding: 8px 0; margin-bottom: 8px;
+}
+
+/* Notif card */
+.list { display: flex; flex-direction: column; gap: 8px; }
+.notifCard {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 18px;
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.notifCard:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
+.unread {
+  background: #f7f9ff;
+  border-color: #c5d3f5;
+}
+.iconBox {
+  width: 40px; height: 40px;
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.content { flex: 1; min-width: 0; }
+.topRow {
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 8px;
+  margin-bottom: 6px;
+}
+.typeTag {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: .04em; padding: 2px 8px;
+  border-radius: 100px;
+}
+.time { font-size: 12px; color: var(--gray-4); white-space: nowrap; }
+.title {
+  font-size: 14px; font-weight: 600; color: var(--ink);
+  margin-bottom: 3px;
+}
+.message { font-size: 13px; color: var(--gray-5); line-height: 1.5; }
+
+/* Actions */
+.actions {
+  display: flex; gap: 4px; flex-shrink: 0;
+  opacity: 0; transition: var(--transition);
+}
+.notifCard:hover .actions { opacity: 1; }
+.actionBtn {
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px;
+  border-radius: var(--radius-sm);
+  color: var(--gray-4);
+  transition: var(--transition);
+}
+.actionBtn:hover { background: var(--gray-1); color: var(--ink); }
+.deleteBtn:hover  { background: #ffebee !important; color: var(--red) !important; }
+
+.unreadDot {
+  position: absolute; top: 14px; right: 14px;
+  width: 8px; height: 8px;
+  background: #1565c0; border-radius: 50%;
+}
+.notifCard:hover .unreadDot { opacity: 0; }
